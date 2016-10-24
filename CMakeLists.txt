@@ -1,5 +1,5 @@
 # CMake root for RoboStats particle filter lab
-# Ellen Cappo, Humphrey Hu
+# Ellen Cappo, Humphrey Hu, Geetesh Dubey, Azarakhsh Keipour, Nikhil Baheti
 
 # RoboStats Particle Filter
 project( RSPF )
@@ -41,7 +41,7 @@ list( APPEND RSPF_LIBRARIES ${CMAKE_THREAD_LIBS_INIT} )
 
 find_package( Boost REQUIRED )
 include_directories( ${Boost_INCLUDE_DIRS} )
-list( APPEND RSPF_LIBRARIES ${Boost_LIBRARIES} )
+list( APPEND RSPF_LIBRARIES ${Boost_LIBRARIES} -lboost_system)
 list( APPEND RSPF_LIBRARIES "-lboost_thread" ) # Need to force linking against threads
 
 set( RSPF_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/include" )

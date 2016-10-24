@@ -1,6 +1,6 @@
 #include "rspf/Map.h"
 #include "rspf/RobotLogReader.h"
-#include "rspf/FilterVisualizer.h"
+//#include "rspf/FilterVisualizer.h"
 #include "rspf/Parameterized.h"
 
 #include <iostream>
@@ -21,15 +21,15 @@ int main( int argc, char* argv[] ) {
     Map map( ptree.get_child("map") );
 
 	std::cout << "Initializing particle filter nyah..." << std::endl;
-    ParticleFilter pf( map, ptree.get_child("particle_filter") );
+//    ParticleFilter pf( map, ptree.get_child("particle_filter") );
 
 	std::cout << "Initializing filter visualizer..." << std::endl;
-    FilterVisualizer vis( pf, map, ptree.get_child("filter_visualizer") );
+//    FilterVisualizer vis( pf, map, ptree.get_child("filter_visualizer") );
 	    
 	std::cout << "Initializing log reader..." << std::endl;
     RobotLogReader log( ptree.get_child("log_reader") );
 
-	vis.Update(); // Capture first frame
+//	vis.Update(); // Capture first frame
 	
 	unsigned int lineNumber = 0;
     while( log.HasData() ) {
@@ -40,9 +40,9 @@ int main( int argc, char* argv[] ) {
 		lineNumber++;
 				
 		// apply update from data to particles in the pf
-		pf.handleData(data);
+//		pf.handleData(data);
 
-		vis.Update(data);
+//		vis.Update(data);
 
 
 
