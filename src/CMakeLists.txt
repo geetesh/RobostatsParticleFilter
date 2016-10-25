@@ -22,6 +22,7 @@ set( RSPF_particlefilter_SOURCES
 #     WallSensorModel.cpp
      WorkerPool.cpp
     Distributions.cpp
+    LaserModel.cpp
      )
 
 
