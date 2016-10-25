@@ -21,12 +21,18 @@ set( RSPF_particlefilter_SOURCES
 #     TransitionModel.cpp
 #     WallSensorModel.cpp
      WorkerPool.cpp
+    Distributions.cpp
      )
 
+
+include_directories(
+  include
+  ${ARMADILLO_INCLUDE_DIRS}
+)
 
 add_library( RSPF_particlefilter SHARED ${RSPF_particlefilter_SOURCES} )
 
 set_target_properties( RSPF_particlefilter PROPERTIES
     OUTPUT_NAME RSPF_particlefilter )
 
-target_link_libraries( RSPF_particlefilter ${RSPF_LIBRARIES} )
+target_link_libraries( RSPF_particlefilter ${RSPF_LIBRARIES} armadillo)

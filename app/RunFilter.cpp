@@ -2,6 +2,7 @@
 #include "rspf/RobotLogReader.h"
 //#include "rspf/FilterVisualizer.h"
 #include "rspf/Parameterized.h"
+#include "rspf/Distributions.h"
 
 #include <iostream>
 
@@ -13,6 +14,9 @@ int main( int argc, char* argv[] ) {
         std::cout << "Please specify config file." << std::endl;
         return -1;
     }
+
+
+
 
     std::string configFilename( argv[1] );
 	PropertyTree ptree = read_property_xml( configFilename );
