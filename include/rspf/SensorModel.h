@@ -17,7 +17,7 @@ namespace rspf {
 		SensorModel();
 		
 		virtual void weightParticle( Particle& particle, const SensorData& data ) = 0;
-
+                virtual std::vector<double> rayTrace(Particle7 particle, const SensorData& data) = 0;
 // 		std::vector< std::vector<double> > lastTraces; // HACK
 		
 	};

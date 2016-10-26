@@ -18,10 +18,13 @@ private:
     uniformPDF maxPdf;
     uniformPDF randPdf;
 
+    double rayStepSize;
+    double rayThreshold;
+
 public:
     LaserModel( const Map& _map, const PropertyTree& ptree );
     virtual void weightParticle( Particle& particle, const SensorData& data );
-
+    virtual std::vector<double> rayTrace(Particle& particle, const SensorData& data);
 
 };
 

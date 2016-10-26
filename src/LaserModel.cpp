@@ -14,6 +14,8 @@ LaserModel::LaserModel(const rspf::Map &_map, const rspf::PropertyTree &ptree)
     laserSubsample = ptree.get<unsigned int>("laser_subsample");
     max_range= ptree.get_child("uniform_component").get<double>("upper_bound");
 
+    rayThreshold = ptree.get_child("raytrace_threshold");
+
     hitPdf.SetVariance(g_var);
     shortPdf.SetLambda(e_lambda);
     randPdf.SetBounds(0.0,max_range);
@@ -63,4 +65,12 @@ void LaserModel::weightParticle(Particle &particle, const SensorData &data)
 
 }
 
+std::vector<double> LaserModel::rayTrace(Particle& particle, SensorData& data)
+{
+
+    if(!data.hasScan)
+    {
+
+    }
+}
 }
