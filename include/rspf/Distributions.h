@@ -11,6 +11,7 @@ namespace rspf {
     class uniformPDF{
     public:
 
+        uniformPDF();
         uniformPDF( double lower, double upper );
         uniformPDF( const PropertyTree& ptree );
 
@@ -33,6 +34,7 @@ namespace rspf {
     class normalPDF{
     public:
 
+        normalPDF();
         normalPDF( double _mean, double variance );
         normalPDF( const PropertyTree& ptree );
 
@@ -50,6 +52,24 @@ namespace rspf {
         double mean;
         double sigma; // Square root of variance (std dev)
 
+    };
+
+    class exponentialPDF{
+    public:
+        exponentialPDF();
+        exponentialPDF(double l, double v);
+
+        void SetLambda(double val);
+        void SetTrueVal(double val);
+        double GetLambda();
+        double GetTrueVal();
+
+//        double Sample();
+        double GetProb(double meas) const;
+
+    protected:
+        double trueMeas;
+        double lambda;
     };
 
 }

@@ -4,7 +4,12 @@ using namespace arma;
 
 namespace rspf {
 
-    uniformPDF::uniformPDF( double lower, double upper ) {
+uniformPDF::uniformPDF()
+{
+
+}
+
+uniformPDF::uniformPDF( double lower, double upper ) {
         SetBounds( lower, upper );
     }
 
@@ -46,6 +51,11 @@ namespace rspf {
             return 0.0;
         }
         return density;
+    }
+
+    normalPDF::normalPDF()
+    {
+
     }
 
     normalPDF::normalPDF( double _mean, double variance ) {
@@ -94,5 +104,47 @@ namespace rspf {
         double y = a * std::exp(-std::pow((meas-b),2) / (2*std::pow(c,2))) + d;
         return y;
     }
+
+    exponentialPDF::exponentialPDF()
+    {
+
+    }
+
+    exponentialPDF::exponentialPDF(double l, double v)
+    {
+        SetLambda(l);
+        SetTrueVal(v);
+    }
+
+    void exponentialPDF::SetLambda(double val)
+    {
+        lambda = val;
+    }
+
+    void exponentialPDF::SetTrueVal(double val)
+    {
+        trueMeas = val;
+    }
+
+    double exponentialPDF::GetLambda()
+    {
+        return lambda;
+    }
+
+    double exponentialPDF::GetTrueVal()
+    {
+        return trueMeas;
+    }
+
+    double exponentialPDF::GetProb(double meas) const
+    {
+        if(!(meas <= trueMeas && meas >= 0.0))
+            return 0.0;
+
+        double eta = 1/(1-std::exp(-lambda*trueMeas));
+        double prob = eta * lambda * std::exp(-lambda*meas);
+        return prob;
+    }
+
 
 }
