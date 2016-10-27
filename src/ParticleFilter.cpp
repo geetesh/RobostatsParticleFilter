@@ -30,8 +30,11 @@ namespace rspf {
 		for( unsigned int i = 0; i < numWorkers; i++ ) {
 			TransitionModel::Ptr model = std::make_shared<DefaultTransitionModel>( map, ptree.get_child("transition_model") );
 			transitionModel.push_back( model );
+
 			usleep(1000); // NOTE To avoid correlating the RNGs too much
 		}
+
+        myTransitionModel = std::make_shared<MyTransitionModel>(ptree.get_child("transition_model") );
 
 		resampler = std::make_shared<LowVarianceResampler>( ptree.get_child("resampler") );
 			
@@ -167,7 +170,8 @@ namespace rspf {
 
 		for(int i = startIndex; i <= endIndex; i++)
 		{
-			transitionModel[instanceNum]->transitionParticle( particleSet[i], data );
+//			transitionModel[instanceNum]->transitionParticle( particleSet[i], data );
+            myTransitionModel->transitionParticle(particleSet[i]);
 			particleSet[i].Weight = 1.0F;
 
 			for( unsigned int j = 0; j < sensorModels.size(); j++ ) {
