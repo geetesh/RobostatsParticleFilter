@@ -28,6 +28,7 @@ set( RSPF_particlefilter_SOURCES
      WorkerPool.cpp
  LaserModel.cpp
 MyMap.cpp
+MyResampler.cpp
      )
 
 

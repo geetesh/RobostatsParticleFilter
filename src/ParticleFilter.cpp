@@ -20,7 +20,8 @@ namespace rspf {
 		map( _map ),
 		workers( ptree.get_child("workers") ),
 		numParticles( ptree.get<unsigned int>("num_particles") ),
-		jobsPending( 0 )
+        jobsPending( 0 ),
+        my_resampler( ptree.get_child("resampler"))
 	{
 		
 		Initialize( ptree.get<unsigned int>("init_particles") );
@@ -142,9 +143,15 @@ namespace rspf {
 //		}
         unsigned int start = 0;
         unsigned int end = (particleSet.size()-1);
+//        std::printf("\n\t\t\tB4 HANDLSUBSET");
         handleDataSubset(data,start,end,0);
+//        std::printf("\n\t\t\tAFTER HANDLSUBSET");
 
-        particleSet = resampler->resampleParticles( particleSet, numParticles );
+//        std::printf("\n\t\t\tB4 RES");
+//        particleSet = resampler->resampleParticles( particleSet, numParticles );
+
+        particleSet = my_resampler.resampleParticles( particleSet);
+//        std::printf("\n\t\t\tAFTER RES");
 	}
 
 // 	std::vector< std::vector<double> > ParticleFilter::GetLastRaytraces() {

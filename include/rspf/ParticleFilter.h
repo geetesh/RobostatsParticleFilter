@@ -15,6 +15,8 @@
 
 #include <vector> //carats = system folder
 
+#include "rspf/MyResampler.h"
+
 
 namespace rspf {
 
@@ -41,6 +43,8 @@ namespace rspf {
 		std::vector< TransitionModel::Ptr > transitionModel;
 		std::vector< std::vector<SensorModel::Ptr> > sensorModels;
 		Resampler::Ptr resampler;
+
+        MyResampler my_resampler;
 
 		WorkerPool workers;
 		Semaphore jobsPending;

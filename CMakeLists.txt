@@ -10,6 +10,9 @@ if( NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "" )
   message( STATUS "No build type selected, default to Release" )
   set( CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE )
 endif()
+
+#set( CMAKE_BUILD_TYPE "Debug" )
+
 message( STATUS "Build configuration: ${CMAKE_BUILD_TYPE}" )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
@@ -41,7 +44,7 @@ list( APPEND RSPF_LIBRARIES ${CMAKE_THREAD_LIBS_INIT} )
 
 find_package( Boost REQUIRED )
 include_directories( ${Boost_INCLUDE_DIRS} )
-list( APPEND RSPF_LIBRARIES ${Boost_LIBRARIES} )
+list( APPEND RSPF_LIBRARIES ${Boost_LIBRARIES} -lboost_system)
 list( APPEND RSPF_LIBRARIES "-lboost_thread" ) # Need to force linking against threads
 
 set( RSPF_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/include" )
