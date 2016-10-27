@@ -16,6 +16,8 @@
 
 #include "rspf/MyResampler.h"
 
+#include "rspf/MyTransitionModel.h"
+
 
 namespace rspf {
 
@@ -39,7 +41,7 @@ namespace rspf {
 		unsigned int numParticles;
 		std::vector<Particle> particleSet;
 		
-		std::vector< TransitionModel::Ptr > transitionModel;
+        MyTransitionModel::Ptr myTransitionModel;
 		std::vector< std::vector<SensorModel::Ptr> > sensorModels;
 
         MyResampler my_resampler;

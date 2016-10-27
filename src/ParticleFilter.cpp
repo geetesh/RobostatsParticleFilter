@@ -25,11 +25,13 @@ namespace rspf {
 		Initialize( ptree.get<unsigned int>("init_particles") );
 
 		unsigned int numWorkers = workers.size();
-		for( unsigned int i = 0; i < numWorkers; i++ ) {
-			TransitionModel::Ptr model = std::make_shared<DefaultTransitionModel>( map, ptree.get_child("transition_model") );
-			transitionModel.push_back( model );
-			usleep(1000); // NOTE To avoid correlating the RNGs too much
-		}
+// 		for( unsigned int i = 0; i < numWorkers; i++ ) {
+// 			TransitionModel::Ptr model = std::make_shared<DefaultTransitionModel>( map, ptree.get_child("transition_model") );
+// 
+// 			usleep(1000); // NOTE To avoid correlating the RNGs too much
+// 		}
+
+        myTransitionModel = std::make_shared<MyTransitionModel>(ptree.get_child("transition_model") );
 
 		BOOST_FOREACH( const PropertyTree::value_type& item, ptree ) {
 
@@ -162,7 +164,8 @@ namespace rspf {
 
 		for(int i = startIndex; i <= endIndex; i++)
 		{
-			transitionModel[instanceNum]->transitionParticle( particleSet[i], data );
+//			transitionModel[instanceNum]->transitionParticle( particleSet[i], data );
+            myTransitionModel->transitionParticle(particleSet[i]);
 			particleSet[i].Weight = 1.0F;
 
 			for( unsigned int j = 0; j < sensorModels.size(); j++ ) {
