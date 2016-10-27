@@ -8,12 +8,11 @@
 
 #include "rspf/TransitionModel.h"
 #include "rspf/SensorModel.h"
-#include "rspf/Resampler.h"
 
 #include "rspf/WorkerPool.h"
 #include "rspf/SynchronizationPrimitives.h"
 
-#include <vector> //carats = system folder
+#include <vector>
 
 #include "rspf/MyResampler.h"
 
@@ -42,7 +41,6 @@ namespace rspf {
 		
 		std::vector< TransitionModel::Ptr > transitionModel;
 		std::vector< std::vector<SensorModel::Ptr> > sensorModels;
-		Resampler::Ptr resampler;
 
         MyResampler my_resampler;
 

@@ -77,7 +77,7 @@ LaserModel::LaserModel(const rspf::Map &_map, const rspf::PropertyTree &ptree) :
     randPdf.SetBounds(0.0,max_range);
     maxPdf.SetBounds(max_range-1e2,max_range);
 
-    wean_map = new MyMap("wean.dat");
+    wean_map = new MyMap("map/wean.dat");
 
     std::printf("\n w_hit \t: %f",w_hit);
     std::printf("\n w_short \t: %f",w_short);

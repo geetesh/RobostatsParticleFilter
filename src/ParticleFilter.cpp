@@ -10,8 +10,6 @@
 #include "rspf/LaserModel.h"
 #include "rspf/WallSensorModel.h"
 
-#include "rspf/LowVarianceResampler.h"
-
 #include <boost/foreach.hpp>
 
 namespace rspf {
@@ -32,9 +30,6 @@ namespace rspf {
 			transitionModel.push_back( model );
 			usleep(1000); // NOTE To avoid correlating the RNGs too much
 		}
-
-		resampler = std::make_shared<LowVarianceResampler>( ptree.get_child("resampler") );
-			
 
 		BOOST_FOREACH( const PropertyTree::value_type& item, ptree ) {
 
