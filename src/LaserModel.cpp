@@ -1,4 +1,5 @@
 #include "rspf/LaserModel.h"
+#include "opencv2/highgui/highgui.hpp"
 
 using namespace arma;
 
@@ -65,7 +66,7 @@ std::vector<double> LaserModel::RayTrace(Particle particle, SensorData data, uns
 // 			xL = xL-laserH.getX();
 // 			yL = yL-laserH.getY();
 // 			zhat[s] = std::sqrt( xL*xL + yL*yL ); // store the distance that the laser went on this scan before it hit something
-        std::cout<<"\n angle:"<< scanAngle;
+//        std::cout<<"\n angle:"<< scanAngle;
         zhat[s] = r;
     } // end for-every-scan
 
@@ -74,7 +75,13 @@ std::vector<double> LaserModel::RayTrace(Particle particle, SensorData data, uns
 
 std::vector<double> LaserModel::rayTrace3(Particle& particle, const SensorData& data)
 {
-    cv::Mat map_decimeter = map.GetMap();
+//    cv::Mat I1 = map.GetMap();
+//    cv::Mat I2 = wean_map->Values;
+
+//    cv::imshow( "I1", I1 );
+//    cv::imshow( "I2", I2 );
+
+
    PoseSE2 laserPos = particle.getPose()*data.laserOffset;
    double scanAngle = laserPos.getTheta();
    int points = std::floor(data.ScanSize/(double)laserSubsample);
@@ -84,8 +91,8 @@ std::vector<double> LaserModel::rayTrace3(Particle& particle, const SensorData& 
    for(int i=0;i<points;i++)
    {
        double angle = scanAngle + i*data.ScanResolution*laserSubsample - M_PI/2;
-       double startX = laserPos.getX();
-       double startY = laserPos.getY();
+       double startX = laserPos.getX(); // in meters
+       double startY = laserPos.getY(); // in meters
        double endX = startX + data.MaxRange*std::cos(angle);
        double endY = startY + data.MaxRange*std::sin(angle);
 
@@ -93,7 +100,7 @@ std::vector<double> LaserModel::rayTrace3(Particle& particle, const SensorData& 
        double prob = 1.0;
        double r = -1.0;
 
-       if(startX<0 || startY<0 || startX>=map.GetMap().rows || startY>=map.GetMap().cols )
+       if(startX<0 || startY<0 || startX>=(wean_map->Size.x/wean_map->Resolution) || startY>=(wean_map->Size.y/wean_map->Resolution) )
        {
            return std::vector<double>();
        }
@@ -105,15 +112,15 @@ std::vector<double> LaserModel::rayTrace3(Particle& particle, const SensorData& 
            double xval = alpha*endX + (1-alpha)*startX;
            double yval = alpha*endY + (1-alpha)*startY;
 //           if(startX<0 || startY<0 || startX>map.size.x || startY>map.size.y)
-           if(xval<0 || yval<0 || xval>=map.GetXSize()/*.GetMap().rows*/ || yval>=map.GetYSize()/*.GetMap().cols*/)
+           if(xval<0 || yval<0 || xval>=(wean_map->Size.x/wean_map->Resolution) || yval>=(wean_map->Size.y/wean_map->Resolution))
            {
                r = data.MaxRange;
                break;
            }
 //           prob *= map.GetValue((double)xval/**map.GetScale()*/,(double)yval/**map.GetScale()*/);
-           xval *=10;
-           yval *=10;
-           prob *= map_decimeter.at<double>((int)xval,(int)yval);
+//           xval *=10;
+//           yval *=10;
+           prob *= wean_map->GetMapValue(xval,yval);
 //           std::cout<<"\ngetVal2:"<<xval<<","<<yval;
 //           std::cout<<"\nitpos:"<<it.pos() <<" ,Start: "<<startPoint << "start/end"<<endPoint;
 

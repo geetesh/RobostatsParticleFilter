@@ -42,14 +42,16 @@ namespace rspf {
         // Read the map elements
         for (int i = 0; i < MyMap::Size.x; ++i)
             for (int j = 0; j < MyMap::Size.y; ++j)
-                fscanf(mapfile, "%lf", &Values.at<double>(i, j));
+                fscanf(mapfile, "%lf", &Values.at<double>(j, i));
+
+        cv::flip(Values,Values,0);
     }
 	
     double MyMap::GetMapValue(double x, double y)
     {
         // Calculate the matrix element position
-        int i = std::round(x / MyMap::Resolution);
-        int j = std::round(y / MyMap::Resolution);
+        int i = std::round(x * MyMap::Resolution);
+        int j = std::round(y * MyMap::Resolution);
 
         // If the position is out of matrix, return -1 (= I don't know)
         if (i < 0 || i >= MyMap::Size.x || j < 0 || j >= MyMap::Size.y)

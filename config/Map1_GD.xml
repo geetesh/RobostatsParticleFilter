@@ -49,11 +49,11 @@
 		<type>default</type>
 		<x_noise>
 			<mean>0</mean>
-			<variance>0.05</variance>
+			<variance>0.005</variance>
 		</x_noise>
 		<y_noise>
 			<mean>0</mean>
-			<variance>0.005</variance>
+			<variance>0.0005</variance>
 		</y_noise>
 		<th_noise>
 			<mean>0</mean>

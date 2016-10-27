@@ -32,6 +32,10 @@ int main( int argc, char* argv[] ) {
     vis.Update(); // Capture first frame
 	
     unsigned int lineNumber = 0;
+
+//    cv::namedWindow( "I1", CV_WINDOW_AUTOSIZE );
+//    cv::namedWindow( "I2", CV_WINDOW_AUTOSIZE );
+
     while( log.HasData() ) {
 
 		SensorData data = log.GetNextData();

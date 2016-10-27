@@ -17,7 +17,7 @@ namespace rspf {
         static constexpr double StartAngle = -M_PI/2.0;
         static constexpr double EndAngle = M_PI/2.0;
         static constexpr double ScanResolution = M_PI/ScanSize;
-		static constexpr double MaxRange = 818.3;
+        static constexpr double MaxRange = 8.183;
         
         typedef std::array<double, ScanSize> Scan;
 
