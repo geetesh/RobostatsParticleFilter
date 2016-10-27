@@ -28,8 +28,8 @@ namespace rspf {
 	{
 
 		PoseSE2 noise( xNoise.Sample(), yNoise.Sample(), thNoise.Sample() );
-		PoseSE2 corruptedPose = particle.getPose() * noise * data.displacement;
-		particle.setPose( corruptedPose );
+		PoseSE2 corruptedPose = particle.Pose * noise * data.displacement;
+		particle.Pose = corruptedPose;
 		
 // 		if(newX>map.GetXSize()){ newX = map.GetXSize(); }
 // 		if(newX<0){ newX = 0; }

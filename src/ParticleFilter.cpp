@@ -105,8 +105,8 @@ namespace rspf {
 
 					// draw a particle
 					// assign pose to Particle
-						particleSet[i].setPose( myPose );
-						particleSet[i].setW( 1.0 );
+						particleSet[i].Pose = myPose;
+						particleSet[i].Weight = 1.0F;
 						
 					break;
 					
@@ -168,7 +168,7 @@ namespace rspf {
 		for(int i = startIndex; i <= endIndex; i++)
 		{
 			transitionModel[instanceNum]->transitionParticle( particleSet[i], data );
-			particleSet[i].setW( 1.0 );
+			particleSet[i].Weight = 1.0F;
 
 			for( unsigned int j = 0; j < sensorModels.size(); j++ ) {
 //                std::cout<<"inloop2";

@@ -9,7 +9,7 @@ namespace rspf {
 		unsigned int numParticles = particles.size();
 		double weightSum = 0;
 		for( unsigned int i = 0; i < numParticles; i++ ) {
-			weightSum += particles[i].getW();
+			weightSum += particles[i].Weight;
 		}
 		
 		// resample
@@ -42,7 +42,7 @@ namespace rspf {
 			}
 
 			if( randomNums[i] >= weightSum ){
-				weightSum += particles[n].getW();
+				weightSum += particles[n].Weight;
 				n += 1;
 				// 				std::cout <<"I increased n. randomNums[i] = " <<randomNums[i] << ", weight sum: " << weightSum << std::endl;
 			}

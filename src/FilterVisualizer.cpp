@@ -194,7 +194,7 @@ namespace rspf {
 
 		for( unsigned int i = 0; i < numToPlot; i++ ) {
 
-			PoseSE2 pose = particles[i*particleSubsample].getPose() * data.laserOffset;
+			PoseSE2 pose = particles[i*particleSubsample].Pose * data.laserOffset;
 			PoseSE2::Transform trans = pose.GetTransform();
 			trans.translation() = trans.translation() * mapScale;
 			
@@ -234,7 +234,7 @@ namespace rspf {
 		for( unsigned int i = 0; i < numToPlot; i++ ) {
 
             // Transform the points using the poses
-            PoseSE2::Transform trans = particles[i*particleSubsample].getPose().GetTransform();
+            PoseSE2::Transform trans = particles[i*particleSubsample].Pose.GetTransform();
             trans.translation() = trans.translation() * mapScale;
             Eigen::Vector2d tipTrans = trans*tip.colwise().homogeneous();
             Eigen::Vector2d leftTrans = trans*left.colwise().homogeneous();

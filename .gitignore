@@ -4,3 +4,5 @@ lib
 build
 *.*.kate-swp
 bin
+*.kdev4
+

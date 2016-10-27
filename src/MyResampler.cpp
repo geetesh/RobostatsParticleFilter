@@ -21,7 +21,7 @@ std::vector<Particle> MyResampler::resampleParticles(const std::vector<Particle>
     std::vector<Particle> new_particles(numParticles);
     delta = 0;
     for(int i=0;i<numParticles;i++)
-        delta += particles[i].getW();
+        delta += particles[i].Weight;
 
     delta = delta / (double)numParticles;
 
@@ -37,15 +37,15 @@ std::vector<Particle> MyResampler::resampleParticles(const std::vector<Particle>
     int index = 0;
     for(int i=0;i<numParticles;i++)
     {
-        weightsum += particles[i].getW();
+        weightsum += particles[i].Weight;
         while(r<weightsum)
         {
-            PoseSE2 pose = particles[i].getPose();
+            PoseSE2 pose = particles[i].Pose;
             PoseSE2 noise(x_pdf.Sample(),y_pdf.Sample(),th_pdf.Sample());
             pose = pose * noise;
 //            Particle p;
 //            p.setPose(pose);
-            new_particles[index++].setPose(pose);
+            new_particles[index++].Pose = pose;
             r += delta;
         }
     }

@@ -24,8 +24,8 @@ namespace rspf {
 
 		double weightSum = 0;
 		for( unsigned int i = 0; i < numParticles; i++ ) {
-			weightSum += particles[i].getW();
-			if( particles[i].getW() > 2 ) {
+			weightSum += particles[i].Weight;
+			if( particles[i].Weight > 2 ) {
 // 				std::cout << "Added weight: " << particles[i].getW() << " for particle at "
 // 					<< particles[i].getPose() << std::endl;
 			}
@@ -51,11 +51,11 @@ namespace rspf {
 			// if current--SORTED--random# is under the weightSum, then make a newParticle corresponding to the particle-of-this-bin
 			if(	randomNum < weightSum ){
 
-				PoseSE2 pose = particles[n-1].getPose();
+				PoseSE2 pose = particles[n-1].Pose;
 				if( numSampledOfCurrent > 0 ) {
 					pose = pose * SamplePose();
 				}
-				newParticleSet[i].setPose( pose );
+				newParticleSet[i].Pose = pose;
 				
 				i += 1;
 				randomNum += combtooth;
@@ -63,7 +63,7 @@ namespace rspf {
 			}
 			
 			if( randomNum >= weightSum ){
-				weightSum += particles[n].getW();
+				weightSum += particles[n].Weight;
 				n += 1;
 				numSampledOfCurrent = 0;
 			}

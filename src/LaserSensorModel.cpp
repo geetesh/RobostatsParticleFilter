@@ -36,7 +36,7 @@ namespace rspf {
 		
 		// If the ray tracing is infeasible (signalled by empty return), we set the particle weight to zero
 		if( zhat.empty() ) {
-			particle.setW( 0 );
+			particle.Weight = 0;
 			return;
 		}
 
@@ -74,7 +74,7 @@ namespace rspf {
 // 			cumProb += probs[i];
 // 		}
 	
-		particle.setW( cumProb * particle.getW() ); // update the particle weight
+		particle.Weight = cumProb * particle.Weight; // update the particle weight
 				
 	}// end LaserSensorModel::weightParticle
 	
@@ -82,7 +82,7 @@ namespace rspf {
 	{
 		std::vector<double> zhat(numPoints); // initialize vector of probabilities-per-laser-beam
 
-		PoseSE2 laserH = particle.getPose()*data.laserOffset; // find laser position in world
+		PoseSE2 laserH = particle.Pose * data.laserOffset; // find laser position in world
 		
 		double laserAngle = laserH.getTheta(); // get the angle of the laser in the world
 		double scanAngle = data.StartAngle + laserAngle;  // get the starting scan angle (relative to the laser angle)

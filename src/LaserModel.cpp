@@ -7,7 +7,7 @@ namespace rspf {
 
 std::vector<double> LaserModel::rayTrace3(Particle& particle, const SensorData& data)
 {
-    PoseSE2 laserPos = particle.getPose()*data.laserOffset;
+    PoseSE2 laserPos = particle.Pose * data.laserOffset;
     double scanAngle = laserPos.getTheta();
     int points = std::floor(data.ScanSize/(double)laserSubsample);
 
@@ -104,7 +104,7 @@ void LaserModel::weightParticle(Particle &particle, const SensorData &data)
     std::vector<double> zhat = rayTrace3(particle, data);
 
     if( zhat.empty() ) {
-        particle.setW( 0 );
+        particle.Weight = 0;
         return;
     }
 
@@ -129,7 +129,7 @@ void LaserModel::weightParticle(Particle &particle, const SensorData &data)
     }
 
     double joint_prob = sum(log_prob_scan);
-    particle.setW(exp(joint_prob));
+    particle.Weight = exp(joint_prob);
 }
 
 }

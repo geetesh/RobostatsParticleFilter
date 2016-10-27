@@ -1,10 +1,10 @@
 <log_reader>
-	<log_path>robotdata1.log</robot_log_path>
+	<log_path>log/robotdata1.log</robot_log_path>
 	<scale>0.01</scale>
 </log_reader>
 
 <map>
-	<map_path>wean.dat</map_path>
+	<map_path>map/wean.dat</map_path>
 	<scale>0.1</scale>
 </map>
 
