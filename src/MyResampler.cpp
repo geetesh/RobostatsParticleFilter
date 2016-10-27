@@ -16,7 +16,8 @@ MyResampler::MyResampler(const rspf::PropertyTree &ptree):
 
 std::vector<Particle> MyResampler::resampleParticles(const std::vector<Particle> &particles)
 {
-    int numParticles = 5000;//particles.size();
+    int numParticles = particles.size()/2;
+    numParticles = numParticles < 1000 ? 1000 : numParticles;
     std::vector<Particle> new_particles(numParticles);
     delta = 0;
     for(int i=0;i<numParticles;i++)
@@ -30,7 +31,7 @@ std::vector<Particle> MyResampler::resampleParticles(const std::vector<Particle>
 //    for(int j=0;j<100;j++)
 //        std::cout<<"\n"<<r_pdf.Sample();
 
-    std::cout<<"\nDelta:"<<delta;
+//    std::cout<<"\nDelta:"<<delta;
 
     double weightsum = 0;
     int index = 0;
@@ -49,7 +50,7 @@ std::vector<Particle> MyResampler::resampleParticles(const std::vector<Particle>
         }
     }
 
-    std::cout<<"Length of old particle set vs new: "<<numParticles<<" , "<<index;
+//    std::cout<<"Length of old particle set vs new: "<<numParticles<<" , "<<index;
 
     return new_particles;
 }
