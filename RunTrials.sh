@@ -14,7 +14,7 @@ do
 
 	echo "Running trial $i for Map1_Standard"
 	./bin/RunFilter config/Map1_Standard.xml &> Map1_Standard_$i.log
-	mv Map1_Standard.avi ~/Dropbox/FILTER_videos/Map1/Map1_Standard_$i.avi
+#	mv Map1_Standard.avi ~/Dropbox/FILTER_videos/Map1/Map1_Standard_$i.avi
 
 # 	echo "Running trial $i for Map1_HighConfidence"
 # 	./bin/RunFilter config/Map1_HighConfidence.xml &> Map1_HighConfidence_$i.log
@@ -30,7 +30,7 @@ do
 # 
 	echo "Running trial $i for Map4_Standard"
 	./bin/RunFilter config/Map4_Standard.xml &> Map4_Standard_$i.log
-	mv Map4_Standard.avi ~/Dropbox/FILTER_videos/Map4/Map4_Standard_$i.avi
+#	mv Map4_Standard.avi ~/Dropbox/FILTER_videos/Map4/Map4_Standard_$i.avi
 # 
 # 	echo "Running trial $i for Map4_HighConfidence"
 # 	./bin/RunFilter config/Map4_HighConfidence.xml &> Map4_HighConfidence_$i.log

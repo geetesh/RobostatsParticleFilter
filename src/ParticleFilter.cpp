@@ -7,6 +7,7 @@
 #include <time.h>
 
 #include "rspf/LaserSensorModel.h"
+#include "rspf/LaserModel.h"
 #include "rspf/WallSensorModel.h"
 
 #include "rspf/LowVarianceResampler.h"
@@ -45,16 +46,16 @@ namespace rspf {
 				std::vector<SensorModel::Ptr> models;
 				if( type == "laser" ) {
 					for( unsigned int i = 0; i < numWorkers; i++ ) {
-						SensorModel::Ptr model = std::make_shared<LaserSensorModel>( map, ptree.get_child("sensor_model") );
+                        SensorModel::Ptr model = std::make_shared<LaserModel>( map, ptree.get_child("sensor_model") );
 						models.push_back( model );
 					}
-				}
+                }/*
 				else if( type == "wall" ) {
 					for( unsigned int i = 0; i < numWorkers; i++ ) {
 						SensorModel::Ptr model = std::make_shared<WallSensorModel>( map );
 						models.push_back( model );
 					}
-				}
+                }*/
 				else {
 					throw std::runtime_error( "Unknown sensor model of type: " + type );
 				}
@@ -124,22 +125,26 @@ namespace rspf {
 		double numWorkers = workers.size();
 		double chunkSize = particleSet.size() / numWorkers;
 
-		for( unsigned int i = 0; i < numWorkers; i++ ) {
-			unsigned int startIndex = std::floor( i*chunkSize );
-			unsigned int endIndex = std::floor( (i+1)*chunkSize ) - 1;
-			WorkerPool::Job job =
-				boost::bind( &ParticleFilter::handleDataSubset, this, data, startIndex, endIndex, i );
-			workers.EnqueueJob( job );
-		}
+//		for( unsigned int i = 0; i < numWorkers; i++ ) {
+//			unsigned int startIndex = std::floor( i*chunkSize );
+//			unsigned int endIndex = std::floor( (i+1)*chunkSize ) - 1;
+//			WorkerPool::Job job =
+//				boost::bind( &ParticleFilter::handleDataSubset, this, data, startIndex, endIndex, i );
+//			workers.EnqueueJob( job );
+//		}
 
-		for( unsigned int i = 0; i < numWorkers; i++ ) {
-			jobsPending.Decrement();
-		}
+//		for( unsigned int i = 0; i < numWorkers; i++ ) {
+//			jobsPending.Decrement();
+//		}
 
-		for( unsigned int i = 0; i < particleSet.size(); i++ ) {
-			double w = particleSet[i].getW();
-		}
-		particleSet = resampler->resampleParticles( particleSet, numParticles );
+//		for( unsigned int i = 0; i < particleSet.size(); i++ ) {
+//			double w = particleSet[i].getW();
+//		}
+        unsigned int start = 0;
+        unsigned int end = (particleSet.size()-1);
+        handleDataSubset(data,start,end,0);
+
+        particleSet = resampler->resampleParticles( particleSet, numParticles );
 	}
 
 // 	std::vector< std::vector<double> > ParticleFilter::GetLastRaytraces() {
@@ -159,10 +164,11 @@ namespace rspf {
 			particleSet[i].setW( 1.0 );
 
 			for( unsigned int j = 0; j < sensorModels.size(); j++ ) {
-				sensorModels[j][instanceNum]->weightParticle( particleSet[i], data );
+//                std::cout<<"inloop2";
+                sensorModels[j][instanceNum]->weightParticle( particleSet[i], data );
 			}
 		}
-		jobsPending.Increment();
+//		jobsPending.Increment();
 	}
 	
 }

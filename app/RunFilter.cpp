@@ -23,15 +23,15 @@ int main( int argc, char* argv[] ) {
 	std::cout << "Initializing particle filter nyah..." << std::endl;
     ParticleFilter pf( map, ptree.get_child("particle_filter") );
 
-	std::cout << "Initializing filter visualizer..." << std::endl;
+    std::cout << "Initializing filter visualizer..." << std::endl;
     FilterVisualizer vis( pf, map, ptree.get_child("filter_visualizer") );
 	    
 	std::cout << "Initializing log reader..." << std::endl;
     RobotLogReader log( ptree.get_child("log_reader") );
 
-	vis.Update(); // Capture first frame
+    vis.Update(); // Capture first frame
 	
-	unsigned int lineNumber = 0;
+    unsigned int lineNumber = 0;
     while( log.HasData() ) {
 
 		SensorData data = log.GetNextData();
@@ -39,15 +39,17 @@ int main( int argc, char* argv[] ) {
 // 		std::cout << "Read line " << lineNumber << std::endl;
 		lineNumber++;
 				
-		// apply update from data to particles in the pf
+        // apply update from data to particles in the pf
+
 		pf.handleData(data);
 
-		vis.Update(data);
+        vis.Update(data);
 
+        std::cout<<"\ninloop1";
 
 
     }
-    
+    std::cout<<"\nFINISHED";
     return 0;
     
 }

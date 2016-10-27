@@ -68,7 +68,7 @@ namespace rspf {
 				numSampledOfCurrent = 0;
 			}
 		} // end while
-
+        std::cout<<"\nWeightedSum: "<<weightSum;
 		return newParticleSet;
 	}
 
