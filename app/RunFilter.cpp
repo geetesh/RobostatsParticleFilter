@@ -1,4 +1,4 @@
-#include "rspf/Map.h"
+#include "rspf/MyMap.h"
 #include "rspf/RobotLogReader.h"
 #include "rspf/FilterVisualizer.h"
 #include "rspf/Parameterized.h"
@@ -18,7 +18,7 @@ int main( int argc, char* argv[] ) {
 	PropertyTree ptree = read_property_xml( configFilename );
 
 	std::cout << "Initializing map..." << std::endl;
-    Map map( ptree.get_child("map") );
+    MyMap map( "map/wean.dat" );
 
 	std::cout << "Initializing particle filter nyah..." << std::endl;
     ParticleFilter pf( map, ptree.get_child("particle_filter") );

@@ -2,7 +2,7 @@
 #define _LASER_SENSOR_MODEL_H_
 
 #include "rspf/SensorModel.h"
-#include "rspf/Map.h"
+#include "rspf/MyMap.h"
 #include "rspf/Parameterized.h"
 #include "rspf/RandomDistributions.h"
 
@@ -13,13 +13,13 @@ namespace rspf {
 
 		typedef std::shared_ptr<LaserSensorModel> Ptr;
 		
-		LaserSensorModel( const Map& _map, const PropertyTree& ptree );
+		LaserSensorModel( const MyMap& _map, const PropertyTree& ptree );
 		
 		virtual void weightParticle( Particle& particle, const SensorData& data );
 		
     private:
 		
-		const Map& map;
+		const MyMap& map;
 		
 		unsigned int laserSubsample;
 		double raytraceStepsize;

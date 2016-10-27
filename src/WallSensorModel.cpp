@@ -2,13 +2,13 @@
 
 namespace rspf {
 
-	WallSensorModel::WallSensorModel( const Map& _map ) :
+	WallSensorModel::WallSensorModel( const MyMap& _map ) :
 		map( _map ) {
 
 		xMin = 0;
 		yMin = 0;
-		xMax = map.GetXSize() - 1E-3;
-		yMax = map.GetYSize() - 1E-3;
+		xMax = map.RealSize.x - 1E-3;
+		yMax = map.RealSize.y - 1E-3;
 	}
 
 	void WallSensorModel::weightParticle( Particle& particle, const SensorData& data ) {
@@ -23,7 +23,7 @@ namespace rspf {
 			return;
 		}
 
-		double mapValue = map.GetValue( x, y );
+		double mapValue = map.GetRealValue( x, y );
 		if( std::abs( mapValue + 1.0 ) < 1E-6 ) {
 			particle.Weight = 0;
 		}

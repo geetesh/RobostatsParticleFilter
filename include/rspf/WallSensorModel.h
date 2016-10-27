@@ -2,7 +2,7 @@
 #define _WALL_SENSOR_MODEL_H_
 
 #include "rspf/SensorModel.h"
-#include "rspf/Map.h"
+#include "rspf/MyMap.h"
 
 namespace rspf {
 
@@ -11,13 +11,13 @@ namespace rspf {
 
 		typedef std::shared_ptr<WallSensorModel> Ptr;
 		
-		WallSensorModel( const Map& _map );
+		WallSensorModel( const MyMap& _map );
 
 		virtual void weightParticle( Particle& particle, const SensorData& data );
 		
 	private:
 
-		const Map& map;
+		const MyMap& map;
 		double xMin;
 		double xMax;
 		double yMin;

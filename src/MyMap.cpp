@@ -47,7 +47,7 @@ namespace rspf {
         cv::flip(Values,Values,0);
     }
 	
-    double MyMap::GetMapValue(double x, double y)
+    double rspf::MyMap::GetRealValue(double x, double y) const
     {
         // Calculate the matrix element position
         int i = std::round(x * MyMap::Resolution);

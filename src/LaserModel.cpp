@@ -41,7 +41,7 @@ std::vector<double> LaserModel::rayTrace3(Particle& particle, const SensorData& 
                 r = data.MaxRange;
                 break;
             }
-            prob *= wean_map->GetMapValue(xval,yval);
+            prob *= wean_map->GetRealValue(xval,yval);
             if(prob<=rayThreshold)
             {
                 r = j*rayStepSize;
@@ -57,7 +57,7 @@ std::vector<double> LaserModel::rayTrace3(Particle& particle, const SensorData& 
     return zhat;
 }
 
-LaserModel::LaserModel(const rspf::Map &_map, const rspf::PropertyTree &ptree) :
+LaserModel::LaserModel(const MyMap &_map, const rspf::PropertyTree &ptree) :
     map( _map )
 {
     w_hit   = ptree.get<double>("gaussian_weight");
@@ -88,7 +88,7 @@ LaserModel::LaserModel(const rspf::Map &_map, const rspf::PropertyTree &ptree) :
     std::printf("\n max_range \t: %f",max_range);
     std::printf("\n ray thresh \t: %f",rayThreshold);
     std::printf("\n ray Step \t: %f",rayStepSize);
-    std::printf("\n ray Total Steps \t: %f",rayTotalSteps);
+    std::printf("\n ray Total Steps \t: %d",rayTotalSteps);
     std::printf("\n Wean Map \t: %f",wean_map->Resolution);
 }
 

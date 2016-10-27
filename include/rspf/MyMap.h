@@ -15,7 +15,7 @@ public:
     cv::Mat Values;
     
     MyMap(std::string filename);
-    double GetMapValue(double x, double y);
+    double GetRealValue(double x, double y) const;
 };
 
 }

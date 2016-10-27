@@ -4,7 +4,7 @@
 
 namespace rspf {
 
-    LaserSensorModel::LaserSensorModel( const Map& _map, const PropertyTree& ptree ) :
+    LaserSensorModel::LaserSensorModel( const MyMap& _map, const PropertyTree& ptree ) :
 		map( _map ),
 		laserSubsample( ptree.get<unsigned int>("laser_subsample") ),
 		gaussianWeight( ptree.get<double>("gaussian_weight") ),
@@ -99,7 +99,7 @@ namespace rspf {
 			scanAngle += laserSubsample * SensorData::ScanResolution;
 			double r = 0;
 			
-			if( xL < 0 || xL >= map.GetXSize() - 1E-3 || yL < 0 || yL >= map.GetYSize() - 1E-3 ) {
+			if( xL < 0 || xL >= map.RealSize.x - 1E-3 || yL < 0 || yL >= map.RealSize.y - 1E-3 ) {
 				return std::vector<double>() ;
 			}
 			
@@ -112,18 +112,18 @@ namespace rspf {
 				if( xL < 0 ) {
 					xL = 0;
 				}
-				else if( xL >= map.GetXSize() - 1E-3 ) {
-					xL = map.GetXSize() - 1;
+				else if( xL >= map.RealSize.x - 1E-3 ) {
+					xL = map.RealSize.x - 1;
 				}
 				
 				if( yL < 0 ) {
 					yL = 0;
 				}
-				else if( yL >= map.GetYSize() - 1E-3 ) {
-					yL = map.GetYSize() - 1;
+				else if( yL >= map.RealSize.y - 1E-3 ) {
+					yL = map.RealSize.y - 1;
 				}
 
-				double mapVal = map.GetValue( xL, yL );
+				double mapVal = map.GetRealValue( xL, yL );
 
 				prob = prob*mapVal; // check the map, & update the probability that the laser hit something
 

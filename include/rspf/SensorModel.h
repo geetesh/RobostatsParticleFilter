@@ -3,7 +3,7 @@
 
 #include "rspf/Particle.h"
 #include "rspf/RobotLogReader.h"
-#include "rspf/Map.h"
+#include "rspf/MyMap.h"
 
 #include <memory>
 

@@ -2,33 +2,26 @@
 
 set( RSPF_particlefilter_SOURCES
 
-
     Distributions.cpp
+    FilterVisualizer.cpp
+    LaserSensorModel.cpp
+    Parameterized.cpp
+    Particle.cpp 
+    ParticleFilter.cpp
+    PoseSE2.cpp
+    RandomDistributions.cpp
+    RobotLogReader.cpp 
+    SensorModel.cpp
+    SynchronizationPrimitives.cpp
+    Timer.cpp
+    WallSensorModel.cpp
+    WorkerPool.cpp
+    LaserModel.cpp
+    MyMap.cpp
+    MyTransitionModel.cpp
+    MyResampler.cpp
 
-
-	 DefaultTransitionModel.cpp
-	 FilterVisualizer.cpp
-	 LaserSensorModel.cpp
-     Map.cpp
-     Parameterized.cpp
-     Particle.cpp 
-     ParticleFilter.cpp
-	 PoseSE2.cpp
-	 RandomDistributions.cpp
-	 RobotLogReader.cpp 
-	 SensorModel.cpp
-	 StaticTransitionModel.cpp
-	 SynchronizationPrimitives.cpp
-	 Timer.cpp
-     TransitionModel.cpp
-     WallSensorModel.cpp
-     WorkerPool.cpp
- LaserModel.cpp
-MyMap.cpp
-MyTransitionModel.cpp
-MyResampler.cpp
-     )
-
+)
 
 add_library( RSPF_particlefilter SHARED ${RSPF_particlefilter_SOURCES} )
 

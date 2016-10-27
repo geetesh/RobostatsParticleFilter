@@ -6,17 +6,17 @@ namespace rspf {
 
     bool FilterVisualizer::windowThreadInitialized = false;
 
-    FilterVisualizer::FilterVisualizer( ParticleFilter& _filter, const Map& _map,
+    FilterVisualizer::FilterVisualizer( ParticleFilter& _filter, MyMap& _map,
 										const PropertyTree& ptree ) :
 		filter( _filter ),
 		map( _map ),
 		windowName( ptree.get<std::string>("window_name") ),
+		showScans( ptree.get<bool>("show_scans") ), 
+		makeVideo( ptree.get<bool>("make_video") ),
 		mapScale( ptree.get<double>("map_scale") ),
 		robotSize( ptree.get<double>("robot_size") ),
-		particleSubsample( ptree.get<double>("particle_subsample") ),
-		showScans( ptree.get<bool>("show_scans") ), 
-		makeVideo( ptree.get<bool>("make_video") ) {
-
+		particleSubsample( ptree.get<double>("particle_subsample") )
+    {
 		if( makeVideo ) {
 			videoFilename = ptree.get<std::string>("video_filename");
 		}
@@ -40,8 +40,8 @@ namespace rspf {
 		// Initialize window
 		cv::namedWindow( windowName, CV_WINDOW_AUTOSIZE );
 		
-		double mapWidth = map.GetXSize();
-		double mapHeight = map.GetYSize();
+		double mapWidth = map.RealSize.x;
+		double mapHeight = map.RealSize.y;
 		double imageWidth = std::round( mapWidth * mapScale );
 		double imageHeight = std::round( mapHeight * mapScale );
 		
@@ -49,7 +49,7 @@ namespace rspf {
 		mapImage = cv::Mat( imageWidth, imageHeight, CV_8UC3 );
 		for( unsigned int x = 0; x < imageWidth; x++ ) {
 			for( unsigned int y = 0; y < imageHeight; y++ ) {
-				double mapVal = map.GetValue( x/mapScale, y/mapScale );
+				double mapVal = map.GetRealValue(x / mapScale, y / mapScale);
 				
 				if( mapVal == -1.0 ) {
 					mapImage.at<cv::Vec3b>(x, y)[0] = 0;
@@ -84,7 +84,7 @@ namespace rspf {
 
 	void FilterVisualizer::Update() {
 		currentImage = mapImage.clone();
-		std::vector<Particle> particles = filter.GetParticles();
+		std::vector<Particle> particles = filter.Particles;
 		PlotRobotPoses( currentImage, particles );
 		cv::imshow( windowName, currentImage );
 		
@@ -103,7 +103,7 @@ namespace rspf {
 
         // Add things to the image here
         // TODO!
-        std::vector<Particle> particles = filter.GetParticles();
+        std::vector<Particle> particles = filter.Particles;
 
 // 		if( !filter.GetLastRaytraces().empty() ) {
 // 			lastTraces = filter.GetLastRaytraces();
