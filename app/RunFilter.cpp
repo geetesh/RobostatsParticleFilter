@@ -1,4 +1,3 @@
-#include "rspf/Map.h"
 #include "rspf/RobotLogReader.h"
 #include "rspf/FilterVisualizer.h"
 #include "rspf/Parameterized.h"
@@ -17,14 +16,11 @@ int main( int argc, char* argv[] ) {
     std::string configFilename( argv[1] );
 	PropertyTree ptree = read_property_xml( configFilename );
 
-	std::cout << "Initializing map..." << std::endl;
-    Map map( ptree.get_child("map") );
-
 	std::cout << "Initializing particle filter nyah..." << std::endl;
-    ParticleFilter pf( map, ptree.get_child("particle_filter") );
+    ParticleFilter pf( ptree.get_child("particle_filter") );
 
     std::cout << "Initializing filter visualizer..." << std::endl;
-    FilterVisualizer vis( pf, map, ptree.get_child("filter_visualizer") );
+    FilterVisualizer vis( pf,  ptree.get_child("filter_visualizer") );
 	    
 	std::cout << "Initializing log reader..." << std::endl;
     RobotLogReader log( ptree.get_child("log_reader") );
@@ -49,7 +45,7 @@ int main( int argc, char* argv[] ) {
 
         vis.Update(data);
 
-        std::cout<<"\ninloop1";
+//        std::cout<<"\ninloop1";
 
 
     }

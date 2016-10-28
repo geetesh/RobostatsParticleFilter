@@ -5,7 +5,7 @@ using namespace arma;
 
 namespace rspf {
 
-std::vector<double> LaserModel::rayTrace3(Particle& particle, const SensorData& data)
+std::vector<double> LaserModel::rayTrace(Particle& particle, const SensorData& data)
 {
     PoseSE2 laserPos = particle.Pose * data.laserOffset;
     double scanAngle = laserPos.getTheta();
@@ -57,8 +57,7 @@ std::vector<double> LaserModel::rayTrace3(Particle& particle, const SensorData& 
     return zhat;
 }
 
-LaserModel::LaserModel(const rspf::Map &_map, const rspf::PropertyTree &ptree) :
-    map( _map )
+LaserModel::LaserModel(const rspf::PropertyTree &ptree)
 {
     w_hit   = ptree.get<double>("gaussian_weight");
     w_short = ptree.get<double>("exponential_weight");
@@ -103,7 +102,7 @@ void LaserModel::weightParticle(Particle &particle, const SensorData &data)
     }
 
     unsigned int size = data.ScanSize/laserSubsample;
-    std::vector<double> zhat = rayTrace3(particle, data);
+    std::vector<double> zhat = rayTrace(particle, data);
 
     if( zhat.empty() ) {
         particle.Weight = 0;

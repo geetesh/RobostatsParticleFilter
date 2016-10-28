@@ -1,21 +1,21 @@
 #include "rspf/FilterVisualizer.h"
-#include "rspf/Timer.h"
 #include <opencv2/imgproc/imgproc.hpp>
 
 namespace rspf {
 
     bool FilterVisualizer::windowThreadInitialized = false;
 
-    FilterVisualizer::FilterVisualizer( ParticleFilter& _filter, const Map& _map,
-										const PropertyTree& ptree ) :
-		filter( _filter ),
-		map( _map ),
+    FilterVisualizer::FilterVisualizer(ParticleFilter& _filter,
+                                        const PropertyTree& ptree ) :
+        filter( _filter ),
 		windowName( ptree.get<std::string>("window_name") ),
 		mapScale( ptree.get<double>("map_scale") ),
 		robotSize( ptree.get<double>("robot_size") ),
 		particleSubsample( ptree.get<double>("particle_subsample") ),
 		showScans( ptree.get<bool>("show_scans") ), 
 		makeVideo( ptree.get<bool>("make_video") ) {
+
+        map = new MyMap("map/wean.dat");
 
 		if( makeVideo ) {
 			videoFilename = ptree.get<std::string>("video_filename");
@@ -40,8 +40,8 @@ namespace rspf {
 		// Initialize window
 		cv::namedWindow( windowName, CV_WINDOW_AUTOSIZE );
 		
-		double mapWidth = map.GetXSize();
-		double mapHeight = map.GetYSize();
+        double mapWidth = (map->Size.x/map->Resolution);//map.GetXSize();
+        double mapHeight = (map->Size.x/map->Resolution);//map.GetYSize();
 		double imageWidth = std::round( mapWidth * mapScale );
 		double imageHeight = std::round( mapHeight * mapScale );
 		
@@ -49,7 +49,7 @@ namespace rspf {
 		mapImage = cv::Mat( imageWidth, imageHeight, CV_8UC3 );
 		for( unsigned int x = 0; x < imageWidth; x++ ) {
 			for( unsigned int y = 0; y < imageHeight; y++ ) {
-				double mapVal = map.GetValue( x/mapScale, y/mapScale );
+                double mapVal = map->GetMapValue( x/mapScale, y/mapScale );//map.GetValue( x/mapScale, y/mapScale );
 				
 				if( mapVal == -1.0 ) {
 					mapImage.at<cv::Vec3b>(x, y)[0] = 0;
@@ -67,13 +67,13 @@ namespace rspf {
 		if( makeVideo ) {
 			// TODO open videoWriter
 		
-			std::stringstream ss;
-			Timer myTimer;
-			Time fooTime = myTimer.GetTime();
+//			std::stringstream ss;
+//			Timer myTimer;
+//			Time fooTime = myTimer.GetTime();
 
-			ss << fooTime;
+//			ss << fooTime;
 						
-			const std::string myFile = "vid" + ss.str() + ".avi";
+//			const std::string myFile = "vid" + ss.str() + ".avi";
 			cv::Size frameSize = cv::Size( imageWidth, imageHeight );
 			double fps = 30.0;
 			// VideoWriter::VideoWriter(const string& myFile, int fourcc, double 30, Size frameSize, bool isColor=true)

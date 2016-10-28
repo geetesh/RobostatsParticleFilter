@@ -3,7 +3,6 @@
 
 #include "rspf/Particle.h"
 #include "rspf/RobotLogReader.h"
-#include "rspf/Map.h"
 
 #include <memory>
 
@@ -17,8 +16,6 @@ namespace rspf {
 		SensorModel();
 		
 		virtual void weightParticle( Particle& particle, const SensorData& data ) = 0;
-
-// 		std::vector< std::vector<double> > lastTraces; // HACK
 		
 	};
 	

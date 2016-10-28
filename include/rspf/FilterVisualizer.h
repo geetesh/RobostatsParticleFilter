@@ -1,7 +1,7 @@
 #ifndef _FILTER_VISUALIZER_H_
 #define _FILTER_VISUALIZER_H_
 
-#include "rspf/Map.h"
+#include "rspf/MyMap.h"
 #include "rspf/ParticleFilter.h"
 #include "rspf/PoseSE2.h"
 #include "rspf/Parameterized.h"
@@ -14,7 +14,7 @@ namespace rspf {
     class FilterVisualizer {
     public:
 
-		FilterVisualizer( ParticleFilter& filter, const Map& map, const PropertyTree& ptree );
+        FilterVisualizer(ParticleFilter& filter, const PropertyTree& ptree );
 
 		void ShowRaytraces( const std::vector< std::vector<double> >& rays );
 
@@ -24,7 +24,7 @@ namespace rspf {
     protected:
         
         ParticleFilter& filter;
-        const Map& map;
+        MyMap* map;
         const std::string windowName;
 		
 		cv::VideoWriter outputVideo;

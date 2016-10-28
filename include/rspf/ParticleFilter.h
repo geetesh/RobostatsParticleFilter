@@ -1,16 +1,12 @@
 #ifndef PARTICLE_FILTER_
 #define PARTICLE_FILTER_
 
-#include "rspf/Particle.h" //quotes = local folder
+#include "rspf/Particle.h"
 #include "rspf/RobotLogReader.h"
-#include "rspf/Map.h"
+#include "rspf/MyMap.h"
 #include "rspf/Parameterized.h"
-
-#include "rspf/TransitionModel.h"
 #include "rspf/SensorModel.h"
 
-#include "rspf/WorkerPool.h"
-#include "rspf/SynchronizationPrimitives.h"
 
 #include <vector>
 
@@ -24,7 +20,7 @@ namespace rspf {
     class ParticleFilter {
     public:
 
-		ParticleFilter( const Map& _map, const PropertyTree& ptree );
+        ParticleFilter(const PropertyTree& ptree );
 		~ParticleFilter();
 		
 		void makeParticleSet();
@@ -48,17 +44,12 @@ namespace rspf {
 
 //		WorkerPool workers;
 //		Semaphore jobsPending;
-		
-		const Map& map;
 
-		void Initialize( unsigned int numParticles );
-		void handleDataSubset( const SensorData& data, unsigned int startIndex,
-							   unsigned int endIndex, unsigned int instanceNum );
+        MyMap* wean_map;
+
+        void Initialize( unsigned int numParticles );
 		
     }; // class
-  
-//  		std::vector<double> RayTrace( Particle particle, SensorData data, const Map& _map );
-
   
 } 
 

@@ -26,16 +26,12 @@ private:
     uniformPDF maxPdf;
     uniformPDF randPdf;
 
-    const Map& map;
-
     MyMap* wean_map;
 
-    std::vector<double> RayTrace( Particle particle, SensorData data , unsigned int size);
-    std::vector<double> rayTrace2(Particle& particle, const SensorData& data);
-    std::vector<double> rayTrace3(Particle& particle, const SensorData& data);
+    std::vector<double> rayTrace(Particle& particle, const SensorData& data);
 
 public:
-    LaserModel( const Map& _map, const PropertyTree& ptree );
+    LaserModel(const PropertyTree& ptree );
     virtual void weightParticle( Particle& particle, const SensorData& data );
 
 
