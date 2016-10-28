@@ -15,6 +15,7 @@ private:
     double w_rand;
     double g_var;
     double e_lambda;
+    double w_lambda;
     unsigned int laserSubsample;
     double rayThreshold;
     double rayStepSize;

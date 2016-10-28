@@ -13,11 +13,12 @@ MyTransitionModel::MyTransitionModel(const rspf::PropertyTree &ptree):
     std::printf("\n th_noise \t: %f",th_pdf.GetVariance());
 }
 
-void MyTransitionModel::transitionParticle(Particle& p)
+void MyTransitionModel::transitionParticle(Particle& p, const SensorData &data)
 {
-    PoseSE2 pose = p.Pose;
+//    PoseSE2 pose = p.Pose;
     PoseSE2 noise(x_pdf.Sample(),y_pdf.Sample(),th_pdf.Sample());
-    pose = pose * noise;
-    p.Pose = pose;
+    PoseSE2 corruptedPose = p.Pose * noise * data.displacement;
+//    pose = pose * noise;
+    p.Pose = corruptedPose;
 }
 }

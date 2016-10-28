@@ -1,14 +1,15 @@
 #include "rspf/ParticleFilter.h"
 
-#include "rspf/StaticTransitionModel.h"
-#include "rspf/DefaultTransitionModel.h"
+//#include "rspf/StaticTransitionModel.h"
+//#include "rspf/DefaultTransitionModel.h"
 
-#include "rspf/RandomDistributions.h"
-#include <time.h>
+//#include "rspf/RandomDistributions.h"
+#include "rspf/Distributions.h"
+//#include <time.h>
 
-#include "rspf/LaserSensorModel.h"
+//#include "rspf/LaserSensorModel.h"
 #include "rspf/LaserModel.h"
-#include "rspf/WallSensorModel.h"
+//#include "rspf/WallSensorModel.h"
 
 #include <boost/foreach.hpp>
 
@@ -16,15 +17,15 @@ namespace rspf {
 
 	ParticleFilter::ParticleFilter( const Map& _map, const PropertyTree& ptree ) :
 		map( _map ),
-		workers( ptree.get_child("workers") ),
+//		workers( ptree.get_child("workers") ),
 		numParticles( ptree.get<unsigned int>("num_particles") ),
-        jobsPending( 0 ),
+//        jobsPending( 0 ),
         my_resampler( ptree.get_child("resampler"))
 	{
 		
 		Initialize( ptree.get<unsigned int>("init_particles") );
 
-		unsigned int numWorkers = workers.size();
+//		unsigned int numWorkers = workers.size();
 // 		for( unsigned int i = 0; i < numWorkers; i++ ) {
 // 			TransitionModel::Ptr model = std::make_shared<DefaultTransitionModel>( map, ptree.get_child("transition_model") );
 // 
@@ -43,10 +44,10 @@ namespace rspf {
 
 				std::vector<SensorModel::Ptr> models;
 				if( type == "laser" ) {
-					for( unsigned int i = 0; i < numWorkers; i++ ) {
+//					for( unsigned int i = 0; i < numWorkers; i++ ) {
                         SensorModel::Ptr model = std::make_shared<LaserModel>( map, ptree.get_child("sensor_model") );
 						models.push_back( model );
-					}
+//					}
                 }/*
 				else if( type == "wall" ) {
 					for( unsigned int i = 0; i < numWorkers; i++ ) {
@@ -64,26 +65,26 @@ namespace rspf {
 
 	ParticleFilter::~ParticleFilter() {
 
-		for( unsigned int i = 0; i < workers.size(); i++ ) {
-			jobsPending.Increment();
-		}
+//		for( unsigned int i = 0; i < workers.size(); i++ ) {
+//			jobsPending.Increment();
+//		}
 		
 	}
 
 	void ParticleFilter::Initialize( unsigned int n )
 	{
 		// UniformDistribution( double lower, double upper );
-		UniformDistribution uniformX( 0, map.GetXSize() - 1E-3 );
-		UniformDistribution uniformY( 0, map.GetYSize() - 1E-3 );
-		UniformDistribution uniformTheta( 0, 2*M_PI );
+        uniformPDF uniformX( 0, map.GetXSize() - 1E-3 );
+        uniformPDF uniformY( 0, map.GetYSize() - 1E-3 );
+        uniformPDF uniformTheta( 0, 2*M_PI );
 		
-		clock_t now = clock() >> 8;
-		std::cout << "Seeding with " << now << std::endl;
-		std::cout << "Map size: " << map.GetXSize() << std::endl;
+//		clock_t now = clock() >> 8;
+//		std::cout << "Seeding with " << now << std::endl;
+        std::cout << "Map size: " << map.GetXSize() << std::endl;
 
-		uniformX.SetSeed( now );
-		uniformY.SetSeed( now+10000 );
-		uniformTheta.SetSeed( now+2000 );
+//		uniformX.SetSeed( now );
+//		uniformY.SetSeed( now+10000 );
+//		uniformTheta.SetSeed( now+2000 );
 		
 		particleSet = std::vector<Particle>(n);
 		for( unsigned int i = 0; i < n; i++ )
@@ -120,8 +121,8 @@ namespace rspf {
 	void ParticleFilter::handleData( const SensorData& data )
 	{
 		// Have to chunk the indices up
-		double numWorkers = workers.size();
-		double chunkSize = particleSet.size() / numWorkers;
+//		double numWorkers = workers.size();
+//		double chunkSize = particleSet.size() / numWorkers;
 
 //		for( unsigned int i = 0; i < numWorkers; i++ ) {
 //			unsigned int startIndex = std::floor( i*chunkSize );
@@ -165,7 +166,7 @@ namespace rspf {
 		for(int i = startIndex; i <= endIndex; i++)
 		{
 //			transitionModel[instanceNum]->transitionParticle( particleSet[i], data );
-            myTransitionModel->transitionParticle(particleSet[i]);
+            myTransitionModel->transitionParticle(particleSet[i],data);
 			particleSet[i].Weight = 1.0F;
 
 			for( unsigned int j = 0; j < sensorModels.size(); j++ ) {

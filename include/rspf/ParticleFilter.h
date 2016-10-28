@@ -46,8 +46,8 @@ namespace rspf {
 
         MyResampler my_resampler;
 
-		WorkerPool workers;
-		Semaphore jobsPending;
+//		WorkerPool workers;
+//		Semaphore jobsPending;
 		
 		const Map& map;
 

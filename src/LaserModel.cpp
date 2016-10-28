@@ -66,6 +66,7 @@ LaserModel::LaserModel(const rspf::Map &_map, const rspf::PropertyTree &ptree) :
     w_max   = ptree.get<double>("max_range_weight");
     g_var   = ptree.get<double>("gaussian_var");
     e_lambda= ptree.get<double>("exp_lambda");
+    w_lambda= ptree.get<double>("weight_lambda");
     laserSubsample = ptree.get<unsigned int>("laser_subsample");
     rayThreshold = ptree.get<double>("raytrace_threshold");
     rayStepSize = ptree.get<double>("raytrace_stepsize");
@@ -85,6 +86,7 @@ LaserModel::LaserModel(const rspf::Map &_map, const rspf::PropertyTree &ptree) :
     std::printf("\n w_max \t: %f",w_max);
     std::printf("\n g_var \t: %f",g_var);
     std::printf("\n e_lambda \t: %f",e_lambda);
+    std::printf("\n weight_lambda \t: %f",w_lambda);
     std::printf("\n max_range \t: %f",max_range);
     std::printf("\n ray thresh \t: %f",rayThreshold);
     std::printf("\n ray Step \t: %f",rayStepSize);
@@ -129,7 +131,8 @@ void LaserModel::weightParticle(Particle &particle, const SensorData &data)
     }
 
     double joint_prob = sum(log_prob_scan);
-    particle.Weight = exp(joint_prob);
+//    particle.Weight = exp(joint_prob);
+    particle.Weight = pow(exp(joint_prob),w_lambda);
 }
 
 }

@@ -6,9 +6,9 @@ set( RSPF_particlefilter_SOURCES
     Distributions.cpp
 
 
-	 DefaultTransitionModel.cpp
+#	 DefaultTransitionModel.cpp
 	 FilterVisualizer.cpp
-	 LaserSensorModel.cpp
+#	 LaserSensorModel.cpp
      Map.cpp
      Parameterized.cpp
      Particle.cpp 
